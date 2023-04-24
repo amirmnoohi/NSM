@@ -13,10 +13,13 @@ static int __init nsm_init(void)
     // allocate memory
     memory_init();
     pr_notice("memory size: %ld", memory->size);
-
+    
     printk(KERN_INFO "src_address = %s\n", src_address);
     printk(KERN_INFO "dst_address = %s\n", dst_address);
     printk(KERN_INFO "port_number = %d\n", port);
+
+    // initialize client
+    nmsg_init_client(dst_address, port);
 
     // start server code
     nmsg_start_server(src_address, port);
@@ -31,6 +34,9 @@ static void __exit nsm_exit(void)
     // destroy server
     nmsg_stop_server();
 
+    // destroy client
+    nmsg_destroy_client();
+    
     // destroy memory
     memory_destroy();
 

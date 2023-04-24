@@ -25,17 +25,19 @@ int nmsg_init_client(const char *ip_address, const int port_number)
 }
 
 // Function to send message to server
-int nmsg_send_message(char *message)
+int nmsg_send_message(char * message)
 {
     memset(&(nmsg_client.msg), 0, sizeof(nmsg_client.msg));
-    nmsg_client.msg.msg_name = &nmsg_client.dest_addr;
+    nmsg_client.msg.msg_name = &(nmsg_client.dest_addr);
     nmsg_client.msg.msg_namelen = sizeof(nmsg_client.dest_addr);
 
     nmsg_client.vec.iov_base = message;
     nmsg_client.vec.iov_len = strlen(message);
 
-    if (kernel_sendmsg(nmsg_client.sock, &nmsg_client.msg, &nmsg_client.vec, 1, strlen(message)) < 0)
+    if (kernel_sendmsg(nmsg_client.sock, &(nmsg_client.msg), &(nmsg_client.vec), 1, strlen(message)) < 0)
         return -1;
+    
+    pr_info("Message sent successfully\n");
 
     return 0;
 }
@@ -118,8 +120,7 @@ int __nmsg_init_server(void * data){
 
         printk(KERN_INFO "Received %d bytes: %s\n", len, nmsg_server.buf);
 
-        // Process the received message
-        // ...
+        nmsg_process_message(nmsg_server.buf);
     }
 
 
@@ -144,6 +145,21 @@ int nmsg_start_server(const char *ip_address, const int port_number){
 
     wake_up_process(nmsg_server.thread);
     return 0;
+}
+
+void nmsg_process_message(char * message){
+    if(!strcmp("lock", message)){
+        memory->pages[0].state = __EXCLUSIVE;
+        pr_crit("Lock Received and Applied\n");
+    }
+    else if(!strcmp("unlock", message)){
+        memory->pages[0].state = __SHARED;
+        pr_crit("Unlock Received and Applied\n");
+    }else{
+        strcpy(page_address(memory->pages[0].__page), message);
+        memory->pages[0].state = __SHARED;
+        pr_crit("Data Synced: %s\n", (char *)page_address(memory->pages[0].__page));
+    }
 }
 
 // Function to stop server

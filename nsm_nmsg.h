@@ -6,6 +6,7 @@
 #include <linux/kthread.h>
 #include <linux/sched/signal.h>
 
+#include "nsm_mem.h"
 
 /* ==================CLIENT CODE=====================*/
 int nmsg_init_client(const char *, const int);

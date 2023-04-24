@@ -4,6 +4,8 @@
 #include <linux/fs.h>
 #include <linux/device.h>
 
+#include "nsm_nmsg.h"
+
 #define SUCCESS 0
 
 /* Dev name as it appears in /proc/devices   */
