@@ -6,6 +6,6 @@
 #include <linux/types.h>
 
 #include "nsm_dev.h"
-
+#include "nsm_mem.h"
 
 #endif
