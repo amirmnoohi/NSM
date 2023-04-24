@@ -1,0 +1,11 @@
+/.vscode
+/tests
+/*.cmd
+/*.o
+/*.ko
+/*.symvers
+/*.order
+/*.mod.c
+/*.mod
+/user
+
