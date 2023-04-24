@@ -1,7 +1,7 @@
 obj-m += nsm.o 
 
 # Define variables for each object file
-nsm-y := nsm_core.o nsm_dev.o nsm_mem.o
+nsm-y := nsm_core.o nsm_dev.o nsm_mem.o nsm_nmsg.o
 
 # Specify the paths to the kernel headers
 KDIR := /lib/modules/$(shell uname -r)/build

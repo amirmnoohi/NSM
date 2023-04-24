@@ -2,7 +2,7 @@
 
 __memory_t *memory;
 
-void __memory_init(void){
+void memory_init(void){
     size_t i;
 
     memory = kmalloc(sizeof(__memory_t), GFP_KERNEL);
@@ -18,7 +18,7 @@ void __memory_init(void){
     }
 }
 
-void __memory_destroy(void){
+void memory_destroy(void){
     size_t i;
     
     for (i = 0; i < memory->size; i++)

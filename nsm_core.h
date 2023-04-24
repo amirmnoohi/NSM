@@ -7,5 +7,9 @@
 
 #include "nsm_dev.h"
 #include "nsm_mem.h"
+#include "nsm_nmsg.h"
+
+
+
 
 #endif

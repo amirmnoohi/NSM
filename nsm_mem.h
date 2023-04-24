@@ -29,7 +29,7 @@ typedef struct
 
 extern __memory_t *memory;
 
-void __memory_init(void);
-void __memory_destroy(void);
+void memory_init(void);
+void memory_destroy(void);
 
 #endif
